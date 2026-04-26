@@ -132,7 +132,7 @@ export default function Home() {
           {/* Logo and Login */}
           <div className="flex items-center justify-between mb-8">
             <img
-              src="https://d2xsxph8kpxj0f.cloudfront.net/310419663030153148/gajF8zWd6y9RygyUMUpMsZ/c4x_ia_logo_final_large_text-cFJxqgHNa5BVyzX8fC4uu3.webp"
+              src="/manus-storage/WhatsAppImage2026-04-26at10.29.51_2869d1f2.jpeg"
               alt="C4X IA Soluções"
               className="h-40 object-contain"
             />
