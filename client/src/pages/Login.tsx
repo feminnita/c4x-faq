@@ -1,197 +1,111 @@
 import { useState } from "react";
-import { Eye, EyeOff, AlertCircle, CheckCircle } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useLocation } from "wouter";
 
 export default function Login() {
+  const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
-  const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
-  const [successMessage, setSuccessMessage] = useState("");
-  const [, setLocation] = useLocation();
 
-  const validateEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const newErrors: { email?: string; password?: string } = {};
-
-    // Validação
-    if (!email) {
-      newErrors.email = "Email é obrigatório";
-    } else if (!validateEmail(email)) {
-      newErrors.email = "Email inválido";
-    }
-
-    if (!password) {
-      newErrors.password = "Senha é obrigatória";
-    } else if (password.length < 6) {
-      newErrors.password = "Senha deve ter pelo menos 6 caracteres";
-    }
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
-
-    setErrors({});
-    setIsLoading(true);
-    setSuccessMessage("");
-
-    // Simular login com delay
-    setTimeout(() => {
-      setIsLoading(false);
-      setSuccessMessage("Login realizado com sucesso! Redirecionando...");
-      
-      // Limpar formulário
-      setEmail("");
-      setPassword("");
-      
-      // Redirecionar após 1.5s
-      setTimeout(() => {
-        setLocation("/dashboard");
-      }, 1500);
-    }, 1500);
-  };
-
-  const handleSocialLogin = (provider: string) => {
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      setSuccessMessage(`Login com ${provider} realizado com sucesso!`);
-      setTimeout(() => {
-        setLocation("/dashboard");
-      }, 1500);
-    }, 1500);
+    console.log("Login attempt:", { email, password, rememberMe });
   };
 
   return (
-    <div className="min-h-screen bg-white flex">
-      {/* Left Side - Branding (Curved Design) */}
-      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-[#0F172A] via-[#1A3A6B] to-[#0F172A] flex-col justify-between p-12 text-white relative overflow-hidden">
-        {/* Curved SVG Background */}
+    <div className="min-h-screen flex bg-gray-50">
+      {/* Left Section - Branding */}
+      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-[#0F172A] via-[#1a3a6b] to-[#0F172A] text-white flex-col justify-center items-center p-12 relative overflow-hidden">
+        {/* Curved SVG Background - Clean design without circles */}
         <svg
-          className="absolute inset-0 w-full h-full"
+          className="absolute inset-0 w-full h-full opacity-20"
           viewBox="0 0 500 500"
           preserveAspectRatio="none"
+          xmlns="http://www.w3.org/2000/svg"
         >
           <defs>
             <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="rgba(232, 201, 154, 0.1)" />
-              <stop offset="100%" stopColor="rgba(139, 38, 53, 0.15)" />
+              <stop offset="0%" stopColor="#E8C99A" />
+              <stop offset="100%" stopColor="#8B2635" />
             </linearGradient>
           </defs>
           <path
-            d="M 0 100 Q 250 50 500 150 L 500 500 L 0 500 Z"
+            d="M 0 100 Q 150 50 300 100 L 500 0 L 500 500 L 0 500 Z"
             fill="url(#grad1)"
+            opacity="0.15"
           />
         </svg>
 
-        {/* Content */}
-        <div className="relative z-10 animate-fade-in">
+        <div className="relative z-10 text-center max-w-md">
+          {/* Logo */}
           <div className="mb-12">
-            <div className="flex items-center gap-3 mb-6 hover:scale-105 transition-transform duration-300">
-              <div className="text-4xl font-serif font-bold text-[#E8C99A]">
-                C4X
-              </div>
-              <div className="w-1 h-16 bg-[#8B2635]"></div>
-              <div className="text-3xl font-serif text-[#E8C99A]">Soluções</div>
+            <div className="text-6xl font-bold tracking-wider mb-2">
+              <span className="text-[#E8C99A]">C4X</span>
             </div>
-            <p className="text-[#E8C99A] text-lg font-light">
-              Inteligência Virtual para sua Empresa
-            </p>
+            <div className="text-2xl font-light text-[#E8C99A] mb-4">
+              Soluções
+            </div>
+            <div className="h-1 w-20 bg-[#8B2635] mx-auto mb-8"></div>
           </div>
 
-          <h2 className="text-5xl font-serif font-bold mb-6 leading-tight">
-            Bem-vindo
-          </h2>
-          <p className="text-gray-300 text-lg leading-relaxed">
-            Gerencie seus negócios com inteligência artificial. Módulos modulares
-            de Gestão Operacional, Financeira, Marketing e Estoque — tudo em uma
-            plataforma sofisticada.
-          </p>
+          {/* Welcome Section */}
+          <div className="space-y-6">
+            <h2 className="text-5xl font-bold leading-tight">BEM-VINDO</h2>
+            <p className="text-lg font-light text-gray-200 leading-relaxed">
+              Gerencie seus negócios com inteligência artificial. Módulos modulares de Gestão Operacional, Financeira, Marketing e Estoque — tudo em uma plataforma sofisticada.
+            </p>
+          </div>
         </div>
 
         {/* Footer */}
-        <div className="relative z-10 text-gray-400 text-sm">
+        <div className="absolute bottom-6 left-0 right-0 text-center text-gray-400 text-xs">
           <p>© 2026 C4X Soluções. Todos os direitos reservados.</p>
         </div>
       </div>
 
-      {/* Right Side - Login Form */}
-      <div className="w-full lg:w-1/2 flex flex-col justify-center px-8 sm:px-12 py-12 bg-white">
-        {/* Mobile Logo */}
-        <div className="lg:hidden mb-12 text-center">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="text-3xl font-serif font-bold text-[#E8C99A]">
-              C4X
+      {/* Right Section - Login Form */}
+      <div className="w-full lg:w-1/2 flex flex-col justify-center items-center p-8 md:p-16 bg-white rounded-3xl lg:rounded-none shadow-2xl lg:shadow-none">
+        <div className="w-full max-w-md">
+          {/* Mobile Logo */}
+          <div className="lg:hidden mb-12 text-center">
+            <div className="text-4xl font-bold mb-2">
+              <span className="text-[#E8C99A]">C4X</span>
+              <span className="text-[#8B2635] ml-3">Soluções</span>
             </div>
-            <div className="w-1 h-12 bg-[#8B2635]"></div>
-            <div className="text-2xl font-serif text-[#E8C99A]">Soluções</div>
+            <div className="h-1 w-16 bg-[#8B2635] mx-auto"></div>
           </div>
-        </div>
 
-        <div className="w-full max-w-md mx-auto">
+          {/* Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-serif font-bold text-[#0F172A] mb-2">
-              Entrar
-            </h1>
-            <p className="text-gray-600">
+            <h1 className="text-3xl font-bold text-[#0F172A] mb-2">Entrar</h1>
+            <p className="text-gray-600 text-sm">
               Acesse sua conta C4X Soluções
             </p>
           </div>
 
-          {/* Success Message */}
-          {successMessage && (
-            <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-3 animate-slide-down">
-              <CheckCircle className="w-5 h-5 text-green-600" />
-              <p className="text-green-700 text-sm font-medium">{successMessage}</p>
-            </div>
-          )}
-
-          <form onSubmit={handleLogin} className="space-y-6">
-            {/* Email Input */}
-            <div>
-              <label htmlFor="email" className="block text-sm font-semibold text-[#0F172A] mb-2">
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Email Field */}
+            <div className="space-y-2">
+              <label htmlFor="email" className="block text-sm font-semibold text-gray-700">
                 Email
               </label>
-              <div className="relative">
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="seu@email.com"
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                    if (errors.email) setErrors({ ...errors, email: undefined });
-                  }}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent transition-all duration-300 ${
-                    errors.email
-                      ? "border-red-500 focus:ring-red-500"
-                      : "border-gray-300 focus:ring-[#8B2635]"
-                  }`}
-                />
-                {errors.email && (
-                  <AlertCircle className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-red-500" />
-                )}
-              </div>
-              {errors.email && (
-                <p className="text-red-500 text-xs mt-2 flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" /> {errors.email}
-                </p>
-              )}
+              <Input
+                id="email"
+                type="email"
+                placeholder="seu@email.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8B2635] focus:border-transparent"
+              />
             </div>
 
-            {/* Password Input */}
-            <div>
-              <label htmlFor="password" className="block text-sm font-semibold text-[#0F172A] mb-2">
+            {/* Password Field */}
+            <div className="space-y-2">
+              <label htmlFor="password" className="block text-sm font-semibold text-gray-700">
                 Senha
               </label>
               <div className="relative">
@@ -200,136 +114,71 @@ export default function Login() {
                   type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
                   value={password}
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                    if (errors.password) setErrors({ ...errors, password: undefined });
-                  }}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent transition-all duration-300 ${
-                    errors.password
-                      ? "border-red-500 focus:ring-red-500"
-                      : "border-gray-300 focus:ring-[#8B2635]"
-                  }`}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8B2635] focus:border-transparent pr-12"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[#8B2635] transition-colors duration-200"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-[#8B2635]"
                 >
                   {showPassword ? (
-                    <EyeOff className="w-5 h-5" />
+                    <EyeOff size={20} />
                   ) : (
-                    <Eye className="w-5 h-5" />
+                    <Eye size={20} />
                   )}
                 </button>
               </div>
-              {errors.password && (
-                <p className="text-red-500 text-xs mt-2 flex items-center gap-1">
-                  <AlertCircle className="w-3 h-3" /> {errors.password}
-                </p>
-              )}
             </div>
 
-            {/* Remember & Forgot */}
-            <div className="flex items-center justify-between text-sm">
-              <label className="flex items-center gap-2 cursor-pointer group">
-                <input
-                  type="checkbox"
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
-                  className="w-4 h-4 rounded border-gray-300 text-[#8B2635] focus:ring-[#8B2635] cursor-pointer transition-all duration-200"
-                />
-                <span className="text-gray-700 group-hover:text-[#8B2635] transition-colors duration-200">
-                  Lembrar-me
-                </span>
+            {/* Remember Me */}
+            <div className="flex items-center">
+              <input
+                id="remember"
+                type="checkbox"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+                className="w-4 h-4 border-gray-300 rounded text-[#8B2635] focus:ring-[#8B2635]"
+              />
+              <label htmlFor="remember" className="ml-2 text-sm text-gray-700">
+                Lembrar-me
               </label>
-              <a
-                href="#"
-                className="text-[#8B2635] hover:text-[#0F172A] font-semibold transition-colors duration-200 hover:underline"
-              >
-                Esqueceu a senha?
-              </a>
             </div>
 
             {/* Login Button */}
             <Button
               type="submit"
-              disabled={isLoading}
-              className="w-full bg-[#0F172A] hover:bg-[#0A0F1F] text-white font-semibold py-3 rounded-lg transition-all duration-300 hover:shadow-lg disabled:opacity-70 disabled:cursor-not-allowed"
+              className="w-full bg-[#0F172A] hover:bg-[#1a2847] text-white font-semibold py-3 rounded-lg transition-all duration-200"
             >
-              {isLoading ? (
-                <span className="flex items-center gap-2">
-                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                  Entrando...
-                </span>
-              ) : (
-                "Entrar"
-              )}
+              Entrar
             </Button>
+
+            {/* Sign in with other */}
+            <Button
+              type="button"
+              variant="outline"
+              className="w-full border-2 border-gray-300 text-gray-700 font-semibold py-3 rounded-lg hover:bg-gray-50"
+            >
+              Entrar com outros
+            </Button>
+
+            {/* Sign Up Link */}
+            <p className="text-center text-sm text-gray-600">
+              Não tem uma conta?{" "}
+              <a href="#" className="text-[#8B2635] hover:text-[#6b1d2a] font-semibold">
+                Cadastre-se
+              </a>
+            </p>
           </form>
 
-          {/* Divider */}
-          <div className="relative my-8">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300"></div>
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">Ou continue com</span>
-            </div>
-          </div>
-
-          {/* Social Login */}
-          <div className="grid grid-cols-2 gap-4">
-            <Button
-              type="button"
-              disabled={isLoading}
-              onClick={() => handleSocialLogin("Google")}
-              variant="outline"
-              className="border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-[#8B2635] transition-all duration-300 disabled:opacity-70"
-            >
-              Google
-            </Button>
-            <Button
-              type="button"
-              disabled={isLoading}
-              onClick={() => handleSocialLogin("Microsoft")}
-              variant="outline"
-              className="border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-[#8B2635] transition-all duration-300 disabled:opacity-70"
-            >
-              Microsoft
-            </Button>
-          </div>
-
-          {/* Sign Up Link */}
-          <p className="text-center text-gray-600 mt-8">
-            Não tem uma conta?{" "}
-            <a
-              href="#"
-              className="text-[#8B2635] hover:text-[#0F172A] font-semibold transition-colors duration-200 hover:underline"
-            >
-              Cadastre-se aqui
-            </a>
-          </p>
-
           {/* Footer Links */}
-          <div className="flex justify-center gap-6 text-xs text-gray-500 mt-8 pt-8 border-t border-gray-200">
-            <a
-              href="#"
-              className="hover:text-[#8B2635] transition-colors duration-200 hover:underline"
-            >
-              Termos de Serviço
-            </a>
-            <a
-              href="#"
-              className="hover:text-[#8B2635] transition-colors duration-200 hover:underline"
-            >
-              Privacidade
-            </a>
-            <a
-              href="#"
-              className="hover:text-[#8B2635] transition-colors duration-200 hover:underline"
-            >
-              Suporte
-            </a>
+          <div className="mt-8 pt-8 border-t border-gray-200 flex justify-center space-x-4 text-xs text-gray-600">
+            <a href="#" className="hover:text-[#8B2635]">Termos</a>
+            <span>•</span>
+            <a href="#" className="hover:text-[#8B2635]">Privacidade</a>
+            <span>•</span>
+            <a href="#" className="hover:text-[#8B2635]">Suporte</a>
           </div>
         </div>
       </div>
