@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ChevronDown, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Link } from "wouter";
 
 interface FAQItem {
   id: string;
@@ -125,17 +126,28 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Header with Logo */}
-      <header className="bg-[#0F172A] text-white py-8 px-4">
-        <div className="container max-w-4xl mx-auto">
-          <div className="flex items-center gap-3 mb-8">
-            <div className="text-3xl font-serif font-bold text-[#E8C99A]">
-              C4X
+      {/* Header */}
+      <header className="bg-[#0F172A] text-white py-6 px-4 sm:px-8">
+        <div className="max-w-7xl mx-auto">
+          {/* Logo and Login */}
+          <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center gap-3">
+              <div className="text-2xl font-serif font-bold text-[#E8C99A]">
+                C4X
+              </div>
+              <div className="w-1 h-8 bg-[#8B2635]"></div>
+              <div className="text-xl font-serif text-[#E8C99A]">
+                Soluções
+              </div>
             </div>
-            <div className="w-1 h-12 bg-[#8B2635]"></div>
-            <div className="text-2xl font-serif text-[#E8C99A]">Soluções</div>
+            <Link href="/login">
+              <Button className="bg-[#8B2635] hover:bg-[#6B1F28] text-white font-semibold">
+                Entrar
+              </Button>
+            </Link>
           </div>
 
+          {/* Title and Description */}
           <h1 className="text-4xl font-serif font-bold mb-2">
             Como podemos ajudar?
           </h1>
