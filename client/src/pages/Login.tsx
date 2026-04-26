@@ -15,66 +15,53 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex bg-gray-50">
-      {/* Left Section - Branding */}
-      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-[#0F172A] via-[#1a3a6b] to-[#0F172A] text-white flex-col justify-center items-center p-12 relative overflow-hidden">
-        {/* Curved SVG Background - Clean design without circles */}
+    <div className="min-h-screen flex bg-white overflow-hidden">
+      {/* Left Section - Welcome with Decorative Elements */}
+      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-[#1e5a96] via-[#2a7ab8] to-[#1e5a96] text-white flex-col justify-center items-center p-12 relative overflow-hidden">
+        {/* Decorative Circles */}
+        <div className="absolute top-20 left-10 w-40 h-40 bg-blue-400 rounded-full opacity-20 blur-3xl"></div>
+        <div className="absolute bottom-32 right-20 w-56 h-56 bg-blue-300 rounded-full opacity-15 blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/4 w-32 h-32 bg-blue-500 rounded-full opacity-10 blur-2xl"></div>
+
+        {/* Curved Wave Shape */}
         <svg
-          className="absolute inset-0 w-full h-full opacity-20"
+          className="absolute inset-0 w-full h-full"
           viewBox="0 0 500 500"
           preserveAspectRatio="none"
           xmlns="http://www.w3.org/2000/svg"
         >
           <defs>
-            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#E8C99A" />
-              <stop offset="100%" stopColor="#8B2635" />
-            </linearGradient>
+            <filter id="blur">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="3" />
+            </filter>
           </defs>
-          <path
-            d="M 0 100 Q 150 50 300 100 L 500 0 L 500 500 L 0 500 Z"
-            fill="url(#grad1)"
-            opacity="0.15"
-          />
+          {/* Large circle on right */}
+          <circle cx="450" cy="100" r="120" fill="rgba(255,255,255,0.08)" filter="url(#blur)" />
+          {/* Large circle on bottom */}
+          <circle cx="100" cy="450" r="150" fill="rgba(255,255,255,0.06)" filter="url(#blur)" />
         </svg>
 
         <div className="relative z-10 text-center max-w-md">
-          {/* Logo */}
-          <div className="mb-12">
-            <div className="text-6xl font-bold tracking-wider mb-2 flex items-center justify-center gap-2">
-              <span className="text-[#E8C99A]">C4X</span>
-              <span className="text-[#8B2635] text-5xl">|</span>
-              <span className="text-[#E8C99A] text-4xl italic font-light">Soluções</span>
-            </div>
-            <div className="h-1 w-48 bg-[#8B2635] mx-auto mb-8"></div>
-          </div>
-
-          {/* Welcome Section */}
+          {/* Welcome Text */}
           <div className="space-y-6">
             <h2 className="text-5xl font-bold leading-tight">BEM-VINDO</h2>
-            <p className="text-lg font-light text-gray-200 leading-relaxed">
-              Gerencie seus negócios com inteligência artificial. Módulos modulares de Gestão Operacional, Financeira, Marketing e Estoque — tudo em uma plataforma sofisticada.
+            <p className="text-base font-light text-blue-100 leading-relaxed">
+              Gerencie seus negócios com inteligência artificial. Módulos modulares de Gestão Operacional, Financeira, Marketing e Estoque — tudo em uma plataforma sofisticada e intuitiva.
             </p>
           </div>
-        </div>
-
-        {/* Footer */}
-        <div className="absolute bottom-6 left-0 right-0 text-center text-gray-400 text-xs">
-          <p>© 2026 C4X Soluções. Todos os direitos reservados.</p>
         </div>
       </div>
 
       {/* Right Section - Login Form */}
-      <div className="w-full lg:w-1/2 flex flex-col justify-center items-center p-8 md:p-16 bg-white rounded-3xl lg:rounded-none shadow-2xl lg:shadow-none">
+      <div className="w-full lg:w-1/2 flex flex-col justify-center items-center p-8 md:p-16 bg-white">
         <div className="w-full max-w-md">
-          {/* Mobile Logo */}
-          <div className="lg:hidden mb-12 text-center">
-            <div className="text-3xl font-bold mb-2 flex items-center justify-center gap-2">
-              <span className="text-[#E8C99A]">C4X</span>
-              <span className="text-[#8B2635] text-2xl">|</span>
-              <span className="text-[#E8C99A] text-2xl italic font-light">Soluções</span>
-            </div>
-            <div className="h-1 w-24 bg-[#8B2635] mx-auto"></div>
+          {/* Logo */}
+          <div className="mb-12">
+            <img
+              src="/manus-storage/WhatsAppImage2026-04-26at10.29.51_2869d1f2.jpeg"
+              alt="C4X IA Soluções"
+              className="h-20 object-contain mb-8"
+            />
           </div>
 
           {/* Header */}
@@ -99,7 +86,7 @@ export default function Login() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8B2635] focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0F172A] focus:border-transparent"
               />
             </div>
 
@@ -116,12 +103,12 @@ export default function Login() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8B2635] focus:border-transparent pr-12"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0F172A] focus:border-transparent pr-12"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-[#8B2635]"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-[#0F172A]"
                 >
                   {showPassword ? (
                     <EyeOff size={20} />
@@ -139,7 +126,7 @@ export default function Login() {
                 type="checkbox"
                 checked={rememberMe}
                 onChange={(e) => setRememberMe(e.target.checked)}
-                className="w-4 h-4 border-gray-300 rounded text-[#8B2635] focus:ring-[#8B2635]"
+                className="w-4 h-4 border-gray-300 rounded text-[#0F172A] focus:ring-[#0F172A]"
               />
               <label htmlFor="remember" className="ml-2 text-sm text-gray-700">
                 Lembrar-me
