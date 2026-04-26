@@ -134,7 +134,7 @@ export default function Home() {
             <img
               src="/manus-storage/ChatGPTImage26deabr.de2026,10_23_53_37b412e4.png"
               alt="C4X IA Soluções"
-              className="h-24 object-contain"
+              className="h-40 object-contain"
             />
             <Link href="/login">
               <Button className="bg-[#8B2635] hover:bg-[#6B1F28] text-white font-semibold">
