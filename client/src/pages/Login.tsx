@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, AlertCircle, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useLocation } from "wouter";
@@ -9,17 +9,66 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
+  const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
+  const [successMessage, setSuccessMessage] = useState("");
   const [, setLocation] = useLocation();
+
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
+    const newErrors: { email?: string; password?: string } = {};
 
-    // Simular login (em produção, isso seria uma chamada à API)
+    // Validação
+    if (!email) {
+      newErrors.email = "Email é obrigatório";
+    } else if (!validateEmail(email)) {
+      newErrors.email = "Email inválido";
+    }
+
+    if (!password) {
+      newErrors.password = "Senha é obrigatória";
+    } else if (password.length < 6) {
+      newErrors.password = "Senha deve ter pelo menos 6 caracteres";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    setErrors({});
+    setIsLoading(true);
+    setSuccessMessage("");
+
+    // Simular login com delay
     setTimeout(() => {
       setIsLoading(false);
-      // Redirecionar para dashboard ou página principal
-      setLocation("/dashboard");
+      setSuccessMessage("Login realizado com sucesso! Redirecionando...");
+      
+      // Limpar formulário
+      setEmail("");
+      setPassword("");
+      
+      // Redirecionar após 1.5s
+      setTimeout(() => {
+        setLocation("/dashboard");
+      }, 1500);
+    }, 1500);
+  };
+
+  const handleSocialLogin = (provider: string) => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      setSuccessMessage(`Login com ${provider} realizado com sucesso!`);
+      setTimeout(() => {
+        setLocation("/dashboard");
+      }, 1500);
     }, 1500);
   };
 
@@ -46,9 +95,9 @@ export default function Login() {
         </svg>
 
         {/* Content */}
-        <div className="relative z-10">
+        <div className="relative z-10 animate-fade-in">
           <div className="mb-12">
-            <div className="flex items-center gap-3 mb-6">
+            <div className="flex items-center gap-3 mb-6 hover:scale-105 transition-transform duration-300">
               <div className="text-4xl font-serif font-bold text-[#E8C99A]">
                 C4X
               </div>
@@ -99,21 +148,45 @@ export default function Login() {
             </p>
           </div>
 
+          {/* Success Message */}
+          {successMessage && (
+            <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-3 animate-slide-down">
+              <CheckCircle className="w-5 h-5 text-green-600" />
+              <p className="text-green-700 text-sm font-medium">{successMessage}</p>
+            </div>
+          )}
+
           <form onSubmit={handleLogin} className="space-y-6">
             {/* Email Input */}
             <div>
               <label htmlFor="email" className="block text-sm font-semibold text-[#0F172A] mb-2">
                 Email
               </label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="seu@email.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8B2635] focus:border-transparent"
-              />
+              <div className="relative">
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="seu@email.com"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (errors.email) setErrors({ ...errors, email: undefined });
+                  }}
+                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent transition-all duration-300 ${
+                    errors.email
+                      ? "border-red-500 focus:ring-red-500"
+                      : "border-gray-300 focus:ring-[#8B2635]"
+                  }`}
+                />
+                {errors.email && (
+                  <AlertCircle className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-red-500" />
+                )}
+              </div>
+              {errors.email && (
+                <p className="text-red-500 text-xs mt-2 flex items-center gap-1">
+                  <AlertCircle className="w-3 h-3" /> {errors.email}
+                </p>
+              )}
             </div>
 
             {/* Password Input */}
@@ -127,14 +200,20 @@ export default function Login() {
                   type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8B2635] focus:border-transparent"
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    if (errors.password) setErrors({ ...errors, password: undefined });
+                  }}
+                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent transition-all duration-300 ${
+                    errors.password
+                      ? "border-red-500 focus:ring-red-500"
+                      : "border-gray-300 focus:ring-[#8B2635]"
+                  }`}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[#8B2635]"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[#8B2635] transition-colors duration-200"
                 >
                   {showPassword ? (
                     <EyeOff className="w-5 h-5" />
@@ -143,18 +222,30 @@ export default function Login() {
                   )}
                 </button>
               </div>
+              {errors.password && (
+                <p className="text-red-500 text-xs mt-2 flex items-center gap-1">
+                  <AlertCircle className="w-3 h-3" /> {errors.password}
+                </p>
+              )}
             </div>
 
             {/* Remember & Forgot */}
             <div className="flex items-center justify-between text-sm">
-              <label className="flex items-center gap-2 cursor-pointer">
+              <label className="flex items-center gap-2 cursor-pointer group">
                 <input
                   type="checkbox"
-                  className="w-4 h-4 rounded border-gray-300 text-[#8B2635] focus:ring-[#8B2635]"
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                  className="w-4 h-4 rounded border-gray-300 text-[#8B2635] focus:ring-[#8B2635] cursor-pointer transition-all duration-200"
                 />
-                <span className="text-gray-700">Lembrar-me</span>
+                <span className="text-gray-700 group-hover:text-[#8B2635] transition-colors duration-200">
+                  Lembrar-me
+                </span>
               </label>
-              <a href="#" className="text-[#8B2635] hover:text-[#0F172A] font-semibold">
+              <a
+                href="#"
+                className="text-[#8B2635] hover:text-[#0F172A] font-semibold transition-colors duration-200 hover:underline"
+              >
                 Esqueceu a senha?
               </a>
             </div>
@@ -163,9 +254,16 @@ export default function Login() {
             <Button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-[#0F172A] hover:bg-[#0A0F1F] text-white font-semibold py-3 rounded-lg transition-colors"
+              className="w-full bg-[#0F172A] hover:bg-[#0A0F1F] text-white font-semibold py-3 rounded-lg transition-all duration-300 hover:shadow-lg disabled:opacity-70 disabled:cursor-not-allowed"
             >
-              {isLoading ? "Entrando..." : "Entrar"}
+              {isLoading ? (
+                <span className="flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  Entrando...
+                </span>
+              ) : (
+                "Entrar"
+              )}
             </Button>
           </form>
 
@@ -183,15 +281,19 @@ export default function Login() {
           <div className="grid grid-cols-2 gap-4">
             <Button
               type="button"
+              disabled={isLoading}
+              onClick={() => handleSocialLogin("Google")}
               variant="outline"
-              className="border-gray-300 text-gray-700 hover:bg-gray-50"
+              className="border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-[#8B2635] transition-all duration-300 disabled:opacity-70"
             >
               Google
             </Button>
             <Button
               type="button"
+              disabled={isLoading}
+              onClick={() => handleSocialLogin("Microsoft")}
               variant="outline"
-              className="border-gray-300 text-gray-700 hover:bg-gray-50"
+              className="border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-[#8B2635] transition-all duration-300 disabled:opacity-70"
             >
               Microsoft
             </Button>
@@ -200,20 +302,32 @@ export default function Login() {
           {/* Sign Up Link */}
           <p className="text-center text-gray-600 mt-8">
             Não tem uma conta?{" "}
-            <a href="#" className="text-[#8B2635] hover:text-[#0F172A] font-semibold">
+            <a
+              href="#"
+              className="text-[#8B2635] hover:text-[#0F172A] font-semibold transition-colors duration-200 hover:underline"
+            >
               Cadastre-se aqui
             </a>
           </p>
 
           {/* Footer Links */}
           <div className="flex justify-center gap-6 text-xs text-gray-500 mt-8 pt-8 border-t border-gray-200">
-            <a href="#" className="hover:text-[#8B2635]">
+            <a
+              href="#"
+              className="hover:text-[#8B2635] transition-colors duration-200 hover:underline"
+            >
               Termos de Serviço
             </a>
-            <a href="#" className="hover:text-[#8B2635]">
+            <a
+              href="#"
+              className="hover:text-[#8B2635] transition-colors duration-200 hover:underline"
+            >
               Privacidade
             </a>
-            <a href="#" className="hover:text-[#8B2635]">
+            <a
+              href="#"
+              className="hover:text-[#8B2635] transition-colors duration-200 hover:underline"
+            >
               Suporte
             </a>
           </div>
