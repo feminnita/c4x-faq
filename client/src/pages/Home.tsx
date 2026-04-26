@@ -131,15 +131,11 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           {/* Logo and Login */}
           <div className="flex items-center justify-between mb-8">
-            <div className="flex items-center gap-3">
-              <div className="text-2xl font-serif font-bold text-[#E8C99A]">
-                C4X
-              </div>
-              <div className="w-1 h-8 bg-[#8B2635]"></div>
-              <div className="text-xl font-serif text-[#E8C99A]">
-                Soluções
-              </div>
-            </div>
+            <img
+              src="https://d2xsxph8kpxj0f.cloudfront.net/310419663030153148/gajF8zWd6y9RygyUMUpMsZ/c4x_ia_logo_refined-KCdBeiJKpySDwVwSgbTLCJ.png"
+              alt="C4X IA Soluções"
+              className="h-16 object-contain"
+            />
             <Link href="/login">
               <Button className="bg-[#8B2635] hover:bg-[#6B1F28] text-white font-semibold">
                 Entrar
@@ -256,7 +252,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="bg-[#0F172A] text-white py-8 mt-16">
         <div className="container max-w-4xl mx-auto px-4 text-center">
-          <p className="text-[#E8C99A] mb-2">C4X Soluções</p>
+          <p className="text-[#E8C99A] mb-2">C4X IA Soluções</p>
           <p className="text-gray-400 text-sm">
             © 2026 C4X Soluções. Todos os direitos reservados.
           </p>
