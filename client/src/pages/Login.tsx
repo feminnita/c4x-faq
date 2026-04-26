@@ -41,13 +41,12 @@ export default function Login() {
         <div className="relative z-10 text-center max-w-md">
           {/* Logo */}
           <div className="mb-12">
-            <div className="text-6xl font-bold tracking-wider mb-2">
+            <div className="text-6xl font-bold tracking-wider mb-2 flex items-center justify-center gap-2">
               <span className="text-[#E8C99A]">C4X</span>
+              <span className="text-[#8B2635] text-5xl">|</span>
+              <span className="text-[#E8C99A] text-4xl italic font-light">Soluções</span>
             </div>
-            <div className="text-2xl font-light text-[#E8C99A] mb-4">
-              Soluções
-            </div>
-            <div className="h-1 w-20 bg-[#8B2635] mx-auto mb-8"></div>
+            <div className="h-1 w-48 bg-[#8B2635] mx-auto mb-8"></div>
           </div>
 
           {/* Welcome Section */}
@@ -70,11 +69,12 @@ export default function Login() {
         <div className="w-full max-w-md">
           {/* Mobile Logo */}
           <div className="lg:hidden mb-12 text-center">
-            <div className="text-4xl font-bold mb-2">
+            <div className="text-3xl font-bold mb-2 flex items-center justify-center gap-2">
               <span className="text-[#E8C99A]">C4X</span>
-              <span className="text-[#8B2635] ml-3">Soluções</span>
+              <span className="text-[#8B2635] text-2xl">|</span>
+              <span className="text-[#E8C99A] text-2xl italic font-light">Soluções</span>
             </div>
-            <div className="h-1 w-16 bg-[#8B2635] mx-auto"></div>
+            <div className="h-1 w-24 bg-[#8B2635] mx-auto"></div>
           </div>
 
           {/* Header */}
