@@ -25,74 +25,49 @@ export default function Login() {
 
   return (
     <div className="min-h-screen bg-white flex">
-      {/* Left Side - Branding */}
-      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-[#0F172A] to-[#1A2F5F] flex-col justify-between p-12 text-white relative overflow-hidden">
-        {/* Decorative Elements */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-[#8B2635] rounded-full opacity-10 -mr-48 -mt-48"></div>
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#E8C99A] rounded-full opacity-5 -ml-40 -mb-40"></div>
-
-        {/* Logo */}
-        <div className="relative z-10">
-          <div className="flex items-center gap-3 mb-8">
-            <div className="text-4xl font-serif font-bold text-[#E8C99A]">
-              C4X
-            </div>
-            <div className="w-1 h-16 bg-[#8B2635]"></div>
-            <div className="text-3xl font-serif text-[#E8C99A]">Soluções</div>
-          </div>
-          <p className="text-[#E8C99A] text-lg font-light">
-            Inteligência Virtual para sua Empresa
-          </p>
-        </div>
+      {/* Left Side - Branding (Curved Design) */}
+      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-[#0F172A] via-[#1A3A6B] to-[#0F172A] flex-col justify-between p-12 text-white relative overflow-hidden">
+        {/* Curved SVG Background */}
+        <svg
+          className="absolute inset-0 w-full h-full"
+          viewBox="0 0 500 500"
+          preserveAspectRatio="none"
+        >
+          <defs>
+            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="rgba(232, 201, 154, 0.1)" />
+              <stop offset="100%" stopColor="rgba(139, 38, 53, 0.15)" />
+            </linearGradient>
+          </defs>
+          <path
+            d="M 0 100 Q 250 50 500 150 L 500 500 L 0 500 Z"
+            fill="url(#grad1)"
+          />
+        </svg>
 
         {/* Content */}
         <div className="relative z-10">
-          <h2 className="text-4xl font-serif font-bold mb-6">
-            Bem-vindo à C4X Soluções
+          <div className="mb-12">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="text-4xl font-serif font-bold text-[#E8C99A]">
+                C4X
+              </div>
+              <div className="w-1 h-16 bg-[#8B2635]"></div>
+              <div className="text-3xl font-serif text-[#E8C99A]">Soluções</div>
+            </div>
+            <p className="text-[#E8C99A] text-lg font-light">
+              Inteligência Virtual para sua Empresa
+            </p>
+          </div>
+
+          <h2 className="text-5xl font-serif font-bold mb-6 leading-tight">
+            Bem-vindo
           </h2>
-          <p className="text-gray-300 text-lg leading-relaxed mb-8">
+          <p className="text-gray-300 text-lg leading-relaxed">
             Gerencie seus negócios com inteligência artificial. Módulos modulares
             de Gestão Operacional, Financeira, Marketing e Estoque — tudo em uma
             plataforma sofisticada.
           </p>
-
-          <div className="space-y-4">
-            <div className="flex items-start gap-4">
-              <div className="w-2 h-2 bg-[#E8C99A] rounded-full mt-2 flex-shrink-0"></div>
-              <div>
-                <h3 className="font-semibold text-[#E8C99A] mb-1">
-                  Módulos Flexíveis
-                </h3>
-                <p className="text-gray-300 text-sm">
-                  Escolha os módulos que sua empresa precisa
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4">
-              <div className="w-2 h-2 bg-[#E8C99A] rounded-full mt-2 flex-shrink-0"></div>
-              <div>
-                <h3 className="font-semibold text-[#E8C99A] mb-1">
-                  Implementação Rápida
-                </h3>
-                <p className="text-gray-300 text-sm">
-                  Comece em questão de dias, não semanas
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4">
-              <div className="w-2 h-2 bg-[#E8C99A] rounded-full mt-2 flex-shrink-0"></div>
-              <div>
-                <h3 className="font-semibold text-[#E8C99A] mb-1">
-                  Suporte 24/7
-                </h3>
-                <p className="text-gray-300 text-sm">
-                  Nossa equipe está sempre pronta para ajudar
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* Footer */}
@@ -102,7 +77,7 @@ export default function Login() {
       </div>
 
       {/* Right Side - Login Form */}
-      <div className="w-full lg:w-1/2 flex flex-col justify-center px-8 sm:px-12 py-12">
+      <div className="w-full lg:w-1/2 flex flex-col justify-center px-8 sm:px-12 py-12 bg-white">
         {/* Mobile Logo */}
         <div className="lg:hidden mb-12 text-center">
           <div className="flex items-center justify-center gap-3 mb-4">
@@ -117,10 +92,10 @@ export default function Login() {
         <div className="w-full max-w-md mx-auto">
           <div className="mb-8">
             <h1 className="text-3xl font-serif font-bold text-[#0F172A] mb-2">
-              Bem-vindo de volta
+              Entrar
             </h1>
             <p className="text-gray-600">
-              Faça login para acessar sua conta C4X Soluções
+              Acesse sua conta C4X Soluções
             </p>
           </div>
 
@@ -188,7 +163,7 @@ export default function Login() {
             <Button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-[#8B2635] hover:bg-[#6B1F28] text-white font-semibold py-3 rounded-lg transition-colors"
+              className="w-full bg-[#0F172A] hover:bg-[#0A0F1F] text-white font-semibold py-3 rounded-lg transition-colors"
             >
               {isLoading ? "Entrando..." : "Entrar"}
             </Button>
