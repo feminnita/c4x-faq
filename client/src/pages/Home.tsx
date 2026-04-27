@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ChevronDown, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,7 +11,7 @@ interface FAQItem {
   answer: string;
 }
 
-const faqData: FAQItem[] = [
+const faqDataHardcoded: FAQItem[] = [
   {
     id: "1",
     category: "Gestão Operacional",
@@ -113,6 +113,19 @@ const categories = [
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Todos");
+  const [faqApiItems, setFaqApiItems] = useState<FAQItem[] | null>(null);
+  useEffect(() => {
+    fetch(import.meta.env.BASE_URL + 'api/faq/public')
+      .then(r => r.json())
+      .then((data: any[]) => setFaqApiItems(data.map(d => ({
+        id: String(d.id),
+        category: d.categoria,
+        question: d.pergunta,
+        answer: d.resposta + (d.video_url ? '\n\n▶ ' + d.video_url : ''),
+      }))))
+      .catch(() => {});
+  }, []);
+  const faqData = faqApiItems ?? faqDataHardcoded;
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
   const filteredFAQ = faqData.filter((item) => {
@@ -132,9 +145,9 @@ export default function Home() {
           {/* Logo and Login */}
           <div className="flex items-center justify-between mb-8">
             <img
-              src="/manus-storage/WhatsAppImage2026-04-26at10.29.51_2869d1f2.jpeg"
+              src={`${import.meta.env.BASE_URL}c4x_logo.png`}
               alt="C4X IA Soluções"
-              className="h-40 object-contain"
+              className="h-44 object-contain"
             />
             <Link href="/login">
               <Button className="bg-[#8B2635] hover:bg-[#6B1F28] text-white font-semibold">

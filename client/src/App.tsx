@@ -1,22 +1,26 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
-import { Route, Switch } from "wouter";
+import { Router as WouterRouter, Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
+import Admin from "./pages/Admin";
 import Login from "./pages/Login";
 
 
-function Router() {
+function AppRouter() {
   return (
-    <Switch>
-      <Route path={"/"} component={Home} />
-      <Route path={"/login"} component={Login} />
-      <Route path={"/404"} component={NotFound} />
-      {/* Final fallback route */}
-      <Route component={NotFound} />
-    </Switch>
+    <WouterRouter base="/faq">
+      <Switch>
+        <Route path={"/"} component={Home} />
+        <Route path={"/login"} component={Login} />
+        <Route path={"/admin"} component={Admin} />
+        <Route path={"/404"} component={NotFound} />
+        {/* Final fallback route */}
+        <Route component={NotFound} />
+      </Switch>
+    </WouterRouter>
   );
 }
 
@@ -31,7 +35,7 @@ function App() {
       <ThemeProvider defaultTheme="light">
         <TooltipProvider>
           <Toaster />
-          <Router />
+          <AppRouter />
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>

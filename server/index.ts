@@ -1,5 +1,6 @@
 import express from "express";
 import { createServer } from "http";
+import faqRouter from './faq-routes.js';
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -16,6 +17,8 @@ async function startServer() {
       ? path.resolve(__dirname, "public")
       : path.resolve(__dirname, "..", "dist", "public");
 
+  app.use(express.json());
+  app.use('/api/faq', faqRouter);
   app.use(express.static(staticPath));
 
   // Handle client-side routing - serve index.html for all routes
