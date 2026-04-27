@@ -224,7 +224,7 @@ export default function Home() {
       </section>
 
       {/* Módulos Integrados */}
-      <section id="modulos" className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+      <section id="modulos" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#0F172A] mb-4">
@@ -236,7 +236,7 @@ export default function Home() {
           </div>
 
           <img
-            src="/manus-storage/pasted_file_dzbWO4_image_ed5f769f.png"
+            src="/manus-storage/pasted_file_GwKAOs_image_bb6783dc.png"
             alt="Módulos Integrados"
             className="w-full rounded-2xl shadow-xl mb-12"
           />
