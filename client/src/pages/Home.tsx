@@ -138,12 +138,16 @@ export default function Home() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="bg-[#8B2635] hover:bg-[#6b1d2a] text-white">
-                Solicitar Demo <ArrowRight className="ml-2 w-4 h-4" />
-              </Button>
-              <Button size="lg" variant="outline" className="border-2 border-[#0F172A] text-[#0F172A]">
-                Saiba Mais
-              </Button>
+              <a href="/faq/contact?type=demo">
+                <Button size="lg" className="bg-[#8B2635] hover:bg-[#6b1d2a] text-white">
+                  Solicitar Demo <ArrowRight className="ml-2 w-4 h-4" />
+                </Button>
+              </a>
+              <a href="#faq">
+                <Button size="lg" variant="outline" className="border-2 border-[#0F172A] text-[#0F172A]">
+                  Saiba Mais
+                </Button>
+              </a>
             </div>
 
             <div className="grid grid-cols-3 gap-6 pt-8 border-t border-gray-200">
@@ -348,12 +352,16 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-white text-[#8B2635] hover:bg-gray-100">
-              Solicitar Demo Gratuita
-            </Button>
-            <Button size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white/10">
-              Falar com Especialista
-            </Button>
+            <a href="/faq/contact?type=demo">
+              <Button size="lg" className="bg-white text-[#8B2635] hover:bg-gray-100">
+                Solicitar Demo Gratuita
+              </Button>
+            </a>
+            <a href="/faq/contact?type=specialist">
+              <Button size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white/10">
+                Falar com Especialista
+              </Button>
+            </a>
           </div>
 
           <p className="text-gray-200 mt-8 text-sm">

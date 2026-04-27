@@ -7,16 +7,18 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import Admin from "./pages/Admin";
 import Login from "./pages/Login";
+import Contact from "./pages/Contact";
 
 
 function AppRouter() {
   return (
     <WouterRouter base="/faq">
       <Switch>
-        <Route path={"/"} component={Home} />
-        <Route path={"/login"} component={Login} />
-        <Route path={"/admin"} component={Admin} />
-        <Route path={"/404"} component={NotFound} />
+        <Route path="/" component={Home} />
+        <Route path="/login" component={Login} />
+        <Route path="/admin" component={Admin} />
+        <Route path="/contact" component={Contact} />
+        <Route path="/404" component={NotFound} />
         {/* Final fallback route */}
         <Route component={NotFound} />
       </Switch>
