@@ -1,9 +1,22 @@
-import { useState } from "react";
-import { ChevronDown, Check, ArrowRight, Zap, Shield, Rocket, TrendingUp } from "lucide-react";
+import { useState, useEffect } from "react";
+import { ChevronDown, Play, Zap, TrendingUp, Lock, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function Home() {
+  const [scrollProgress, setScrollProgress] = useState(0);
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrolled = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      setScrollProgress(scrolled);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const toggleFaq = (index: number) => {
     setExpandedFaq(expandedFaq === index ? null : index);
@@ -36,302 +49,259 @@ export default function Home() {
       answer: "Você pode gerenciar múltiplos marketplaces simultaneamente: Mercado Livre, Shopee, Magalu, Americanas, Amazon e muitos outros. A plataforma sincroniza preços, estoque e pedidos automaticamente.",
     },
     {
-      category: "Implementa",
+      category: "Implementação",
       question: "Quanto tempo leva para implementar?",
       answer: "A implementação típica leva de 2 a 4 semanas, dependendo da complexidade do seu negócio. Oferecemos suporte dedicado durante todo o processo para garantir uma transição suave.",
     },
   ];
 
-  const benefits = [
-    {
-      icon: <Zap className="w-8 h-8" />,
-      title: "Automação Inteligente",
-      description: "Automatize processos complexos de ponta a ponta, desde entrada de dados até geração de relatórios.",
-    },
-    {
-      icon: <TrendingUp className="w-8 h-8" />,
-      title: "Crescimento Exponencial",
-      description: "Aumente receita, eficiência e produtividade com insights baseados em IA e dados em tempo real.",
-    },
-    {
-      icon: <Shield className="w-8 h-8" />,
-      title: "Segurança Garantida",
-      description: "Dados criptografados, conformidade fiscal e backups automáticos para proteger seu negócio.",
-    },
-    {
-      icon: <Rocket className="w-8 h-8" />,
-      title: "Escalabilidade",
-      description: "Cresce com seu negócio. Suporta desde pequenas empresas até grandes corporações.",
-    },
-  ];
-
-  const modules = [
-    {
-      number: "01",
-      title: "Gestão Operacional",
-      description: "Otimize processos, aumente produtividade e dirija excelência operacional.",
-      color: "from-[#8B2635] to-[#6b1d2a]",
-    },
-    {
-      number: "02",
-      title: "Gestão Financeira",
-      description: "Ganhe controle financeiro, melhore planejamento e tome decisões baseadas em dados.",
-      color: "from-[#0F172A] to-[#1a2847]",
-    },
-    {
-      number: "03",
-      title: "Gestão de Estoque",
-      description: "Monitore estoque em tempo real, reduza custos e garanta produtos certos no lugar certo.",
-      color: "from-[#8B2635] to-[#6b1d2a]",
-    },
-    {
-      number: "04",
-      title: "Gestão de Marketing",
-      description: "Entenda sua audiência, fortaleça marca e impulsione crescimento com campanhas inteligentes.",
-      color: "from-[#0F172A] to-[#1a2847]",
-    },
-  ];
-
   return (
     <div className="min-h-screen bg-white">
+      {/* Progress Bar */}
+      <div 
+        className="fixed top-0 left-0 h-1 bg-gradient-to-r from-[#8B2635] to-[#E8C99A] z-50"
+        style={{ width: `${scrollProgress}%`, transition: "width 0.3s ease" }}
+      />
+
       {/* Header */}
-      <header className="fixed top-0 w-full bg-white shadow-sm z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <img
-              src="/manus-storage/logofinal_1d222280.png"
-              alt="C4X IA Soluções"
-              className="h-10 object-contain"
-            />
+            <div className="w-10 h-10 bg-[#0F172A] rounded flex items-center justify-center">
+              <span className="text-white font-bold text-sm">C4X</span>
+            </div>
+            <span className="text-sm font-semibold text-[#0F172A]">Soluções IA</span>
           </div>
           <nav className="hidden md:flex gap-8">
-            <a href="#solucao" className="text-sm font-medium text-gray-700 hover:text-[#8B2635]">
-              Solução
-            </a>
-            <a href="#modulos" className="text-sm font-medium text-gray-700 hover:text-[#8B2635]">
-              Módulos
-            </a>
-            <a href="#beneficios" className="text-sm font-medium text-gray-700 hover:text-[#8B2635]">
-              Benefícios
-            </a>
-            <a href="#faq" className="text-sm font-medium text-gray-700 hover:text-[#8B2635]">
-              FAQ
-            </a>
+            <a href="#transformacao" className="text-sm text-gray-600 hover:text-[#8B2635] transition">Transformação</a>
+            <a href="#modulos" className="text-sm text-gray-600 hover:text-[#8B2635] transition">Módulos</a>
+            <a href="#faq" className="text-sm text-gray-600 hover:text-[#8B2635] transition">FAQ</a>
           </nav>
-          <Button className="bg-[#8B2635] hover:bg-[#6b1d2a] text-white">
-            Começar Agora
-          </Button>
+          <a href="/faq/contact?type=demo">
+            <Button size="sm" className="bg-[#8B2635] hover:bg-[#6b1d2a] text-white">
+              Começar Agora
+            </Button>
+          </a>
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-white via-gray-50 to-white">
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
-          <div className="space-y-8">
-            <div className="space-y-4">
-              <h1 className="text-5xl md:text-6xl font-serif font-bold text-[#0F172A] leading-tight">
-                Inteligência Virtual para sua Empresa
-              </h1>
-              <p className="text-xl text-gray-600 leading-relaxed">
-                Automatize processos complexos, ganhe controle total e impulsione crescimento exponencial com IA integrada.
-              </p>
-            </div>
+      {/* SEÇÃO 1: CAOS (Antes) */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-red-50 to-orange-50">
+        {/* Efeito de caos visual */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-20 left-10 w-96 h-96 bg-red-400 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-orange-400 rounded-full blur-3xl animate-pulse" />
+        </div>
 
-            <div className="flex flex-col sm:flex-row gap-4">
-              <a href="/faq/contact?type=demo">
-                <Button size="lg" className="bg-[#8B2635] hover:bg-[#6b1d2a] text-white">
-                  Solicitar Demo <ArrowRight className="ml-2 w-4 h-4" />
-                </Button>
-              </a>
-              <a href="#faq">
-                <Button size="lg" variant="outline" className="border-2 border-[#0F172A] text-[#0F172A]">
-                  Saiba Mais
-                </Button>
-              </a>
-            </div>
+        <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
+          <div className="mb-8 inline-block">
+            <span className="px-4 py-2 bg-red-100 text-red-700 rounded-full text-sm font-semibold">
+              ⚠️ O Problema
+            </span>
+          </div>
 
-            <div className="grid grid-cols-3 gap-6 pt-8 border-t border-gray-200">
-              <div>
-                <p className="text-3xl font-bold text-[#E8C99A]">300%</p>
-                <p className="text-sm text-gray-600">Aumento de Receita</p>
-              </div>
-              <div>
-                <p className="text-3xl font-bold text-[#E8C99A]">260%</p>
-                <p className="text-sm text-gray-600">Ganho Operacional</p>
-              </div>
-              <div>
-                <p className="text-3xl font-bold text-[#E8C99A]">400%</p>
-                <p className="text-sm text-gray-600">ROI Médio</p>
-              </div>
+          <h1 className="text-5xl md:text-7xl font-serif font-bold text-[#0F172A] mb-6 leading-tight">
+            Seu negócio está <span className="text-red-600">caótico</span>
+          </h1>
+
+          <p className="text-xl md:text-2xl text-gray-700 mb-12 max-w-2xl mx-auto">
+            Planilhas desorganizadas. Processos manuais. Erros custosos. Falta de visibilidade. Seu time está exausto.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <div className="p-6 bg-white/80 backdrop-blur rounded-xl border border-red-200">
+              <div className="text-3xl mb-2">📊</div>
+              <p className="text-gray-700 font-semibold">Dados espalhados</p>
+              <p className="text-sm text-gray-600 mt-2">Em 10 sistemas diferentes</p>
+            </div>
+            <div className="p-6 bg-white/80 backdrop-blur rounded-xl border border-red-200">
+              <div className="text-3xl mb-2">⏰</div>
+              <p className="text-gray-700 font-semibold">Tempo perdido</p>
+              <p className="text-sm text-gray-600 mt-2">40% do dia em tarefas manuais</p>
+            </div>
+            <div className="p-6 bg-white/80 backdrop-blur rounded-xl border border-red-200">
+              <div className="text-3xl mb-2">💸</div>
+              <p className="text-gray-700 font-semibold">Dinheiro indo embora</p>
+              <p className="text-sm text-gray-600 mt-2">Erros custam caro</p>
             </div>
           </div>
 
-          <div className="hidden lg:block">
-            <img
-              src="/manus-storage/pasted_file_BEa1tt_image_11ddb004.png"
-              alt="Hero Background"
-              className="w-full h-auto rounded-2xl shadow-2xl"
-            />
-          </div>
+          <button className="inline-flex items-center gap-2 text-[#8B2635] font-semibold hover:gap-3 transition">
+            <span>Desça para ver a solução</span>
+            <ChevronDown className="w-5 h-5 animate-bounce" />
+          </button>
         </div>
       </section>
 
-      {/* Solução Section */}
-      <section id="solucao" className="py-20 px-4 sm:px-6 lg:px-8 bg-[#0F172A]">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-white mb-4">
-              A Solução Completa
-            </h2>
-            <p className="text-xl text-gray-300">
-              Hub centralizado que integra todos os aspectos da gestão empresarial
-            </p>
+      {/* SEÇÃO 2: TRANSIÇÃO (Descoberta) */}
+      <section id="transformacao" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Gradiente de transição */}
+        <div className="absolute inset-0 bg-gradient-to-b from-orange-50 via-blue-50 to-[#0F172A]" />
+
+        <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
+          <div className="mb-8 inline-block">
+            <span className="px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold">
+              ✨ A Transformação
+            </span>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            {modules.map((module, index) => (
-              <div
-                key={index}
-                className={`bg-gradient-to-br ${module.color} rounded-2xl p-8 text-white transform hover:scale-105 transition-transform duration-300`}
-              >
-                <div className="text-5xl font-bold mb-4 text-[#E8C99A]">{module.number}</div>
-                <h3 className="text-2xl font-serif font-bold mb-3">{module.title}</h3>
-                <p className="text-gray-100">{module.description}</p>
+          <h2 className="text-5xl md:text-6xl font-serif font-bold text-[#0F172A] mb-6">
+            E se tudo mudasse?
+          </h2>
+
+          <p className="text-xl text-gray-700 mb-12">
+            Imagine um sistema que entende seu negócio, automatiza tudo e te dá controle total.
+          </p>
+
+          {/* Animação de fluxo */}
+          <div className="relative h-64 mb-12 flex items-center justify-center">
+            <div className="absolute inset-0 flex items-center justify-between px-8">
+              <div className="text-center">
+                <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl">🔴</span>
+                </div>
+                <p className="text-sm font-semibold text-gray-700">Caos</p>
               </div>
-            ))}
+
+              <div className="flex-1 h-1 bg-gradient-to-r from-red-400 via-yellow-400 to-blue-400 mx-4 relative">
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                  <Sparkles className="w-6 h-6 text-yellow-500 animate-spin" />
+                </div>
+              </div>
+
+              <div className="text-center">
+                <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl">🟢</span>
+                </div>
+                <p className="text-sm font-semibold text-gray-700">Ordem</p>
+              </div>
+            </div>
           </div>
+
+          <p className="text-gray-600 text-lg mb-12">
+            Isso é C4X. Inteligência Artificial para sua Empresa.
+          </p>
         </div>
       </section>
 
-      {/* Automação Visual */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#0F172A] mb-4">
-              Automação Ponta a Ponta
-            </h2>
-            <p className="text-xl text-gray-600">
-              Do XML da nota fiscal à gestão de múltiplos marketplaces
-            </p>
+      {/* SEÇÃO 3: ORDEM (Depois) */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#0F172A] to-[#1a2847]">
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-20 left-10 w-96 h-96 bg-[#E8C99A] rounded-full blur-3xl" />
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#8B2635] rounded-full blur-3xl" />
+        </div>
+
+        <div className="relative z-10 max-w-4xl mx-auto px-4 text-center text-white">
+          <div className="mb-8 inline-block">
+            <span className="px-4 py-2 bg-[#8B2635] text-[#E8C99A] rounded-full text-sm font-semibold">
+              🚀 A Realidade
+            </span>
           </div>
 
-          <img
-            src="https://d2xsxph8kpxj0f.cloudfront.net/310419663030153148/gajF8zWd6y9RygyUMUpMsZ/c4x-automation-flow-PM7gEG7rxHLAeCXmFuR9qR.webp"
-            alt="Automation Flow"
-            className="w-full rounded-2xl shadow-xl"
-          />
+          <h2 className="text-5xl md:text-6xl font-serif font-bold mb-6">
+            Seu negócio <span className="text-[#E8C99A]">decolando</span>
+          </h2>
+
+          <p className="text-xl text-gray-200 mb-12 max-w-2xl mx-auto">
+            Automação total. Dados centralizados. Decisões baseadas em IA. Crescimento exponencial.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <div className="p-6 bg-white/10 backdrop-blur rounded-xl border border-[#E8C99A]/30">
+              <div className="text-3xl mb-2">📈</div>
+              <p className="text-[#E8C99A] font-semibold">300% Crescimento</p>
+              <p className="text-sm text-gray-300 mt-2">Em receita anual</p>
+            </div>
+            <div className="p-6 bg-white/10 backdrop-blur rounded-xl border border-[#E8C99A]/30">
+              <div className="text-3xl mb-2">⚡</div>
+              <p className="text-[#E8C99A] font-semibold">80% Mais Rápido</p>
+              <p className="text-sm text-gray-300 mt-2">Processos automatizados</p>
+            </div>
+            <div className="p-6 bg-white/10 backdrop-blur rounded-xl border border-[#E8C99A]/30">
+              <div className="text-3xl mb-2">🎯</div>
+              <p className="text-[#E8C99A] font-semibold">100% Visibilidade</p>
+              <p className="text-sm text-gray-300 mt-2">Controle total do negócio</p>
+            </div>
+          </div>
+
+          <a href="/faq/contact?type=demo">
+            <Button size="lg" className="bg-[#E8C99A] hover:bg-[#d4b87a] text-[#0F172A] font-semibold">
+              Comece sua transformação
+            </Button>
+          </a>
         </div>
       </section>
 
-      {/* Módulos Integrados */}
+      {/* SEÇÃO 4: MÓDULOS */}
       <section id="modulos" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#0F172A] mb-4">
-              Módulos Integrados
+              4 Módulos Poderosos
             </h2>
             <p className="text-xl text-gray-600">
-              Todos os módulos trabalham em perfeita harmonia
+              Escolha os que sua empresa precisa
             </p>
           </div>
 
-          <img
-            src="/manus-storage/pasted_file_GwKAOs_image_bb6783dc.png"
-            alt="Módulos Integrados"
-            className="w-full rounded-2xl shadow-xl mb-12"
-          />
-        </div>
-      </section>
-
-      {/* Benefícios */}
-      <section id="beneficios" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#0F172A] mb-4">
-              Por que C4X?
-            </h2>
-            <p className="text-xl text-gray-600">
-              Diferenciais que transformam seu negócio
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            {benefits.map((benefit, index) => (
-              <div key={index} className="bg-gradient-to-br from-gray-50 to-white border-2 border-gray-200 rounded-2xl p-8 hover:border-[#8B2635] transition-colors">
-                <div className="text-[#E8C99A] mb-4">{benefit.icon}</div>
-                <h3 className="text-2xl font-serif font-bold text-[#0F172A] mb-3">
-                  {benefit.title}
-                </h3>
-                <p className="text-gray-600">{benefit.description}</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {[
+              { title: "Gestão Operacional", icon: "⚙️", color: "#8B2635" },
+              { title: "Gestão Financeira", icon: "💰", color: "#E8C99A" },
+              { title: "Gestão de Estoque", icon: "📦", color: "#8B2635" },
+              { title: "Gestão de Marketing", icon: "📢", color: "#E8C99A" },
+            ].map((module, idx) => (
+              <div
+                key={idx}
+                className="p-8 rounded-2xl border-2 hover:shadow-xl transition"
+                style={{ borderColor: module.color }}
+              >
+                <div className="text-4xl mb-4">{module.icon}</div>
+                <h3 className="text-2xl font-bold text-[#0F172A] mb-3">{module.title}</h3>
+                <p className="text-gray-600 mb-6">
+                  Automação inteligente e controle total do seu {module.title.toLowerCase()}
+                </p>
+                <Button variant="outline" className="w-full">
+                  Saber mais
+                </Button>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Crescimento Visual */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[#0F172A]">
-        <div className="max-w-7xl mx-auto">
-          <img
-            src="https://d2xsxph8kpxj0f.cloudfront.net/310419663030153148/gajF8zWd6y9RygyUMUpMsZ/c4x-growth-visual-jbhevAbeaihMJyNCH8aAoF.webp"
-            alt="Growth"
-            className="w-full rounded-2xl shadow-2xl"
-          />
-        </div>
-      </section>
-
-      {/* Dashboard Preview */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#0F172A] mb-4">
-              Dashboard Inteligente
-            </h2>
-            <p className="text-xl text-gray-600">
-              Visualize todos os dados da sua empresa em um único lugar
-            </p>
-          </div>
-
-          <img
-            src="https://d2xsxph8kpxj0f.cloudfront.net/310419663030153148/gajF8zWd6y9RygyUMUpMsZ/c4x-dashboard-preview-7DAQZHriRKezPkCG2w6hUM.webp"
-            alt="Dashboard"
-            className="w-full rounded-2xl shadow-2xl"
-          />
-        </div>
-      </section>
-
-      {/* FAQ Section */}
+      {/* SEÇÃO 5: FAQ */}
       <section id="faq" className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#0F172A] mb-4">
               Perguntas Frequentes
             </h2>
-            <p className="text-xl text-gray-600">
-              Encontre respostas para suas dúvidas sobre a C4X
-            </p>
           </div>
 
           <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="bg-white rounded-xl border-2 border-gray-200 overflow-hidden hover:border-[#8B2635] transition-colors">
+            {faqs.map((faq, idx) => (
+              <div
+                key={idx}
+                className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-md transition"
+              >
                 <button
-                  onClick={() => toggleFaq(index)}
-                  className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
+                  onClick={() => toggleFaq(idx)}
+                  className="w-full p-6 flex items-center justify-between hover:bg-gray-50 transition"
                 >
                   <div className="text-left">
-                    <p className="text-sm font-semibold text-[#8B2635] mb-1">{faq.category}</p>
+                    <p className="text-sm text-[#8B2635] font-semibold mb-2">{faq.category}</p>
                     <p className="text-lg font-semibold text-[#0F172A]">{faq.question}</p>
                   </div>
                   <ChevronDown
-                    className={`w-5 h-5 text-[#8B2635] transition-transform duration-300 ${
-                      expandedFaq === index ? "rotate-180" : ""
+                    className={`w-5 h-5 text-[#8B2635] transition ${
+                      expandedFaq === idx ? "rotate-180" : ""
                     }`}
                   />
                 </button>
 
-                {expandedFaq === index && (
-                  <div className="px-6 py-4 bg-gray-50 border-t-2 border-gray-200">
+                {expandedFaq === idx && (
+                  <div className="px-6 pb-6 border-t border-gray-200">
                     <p className="text-gray-700 leading-relaxed">{faq.answer}</p>
                   </div>
                 )}
@@ -341,20 +311,20 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Final */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-[#8B2635] to-[#6b1d2a]">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-serif font-bold text-white mb-6">
-            Transforme sua Empresa Hoje
+      {/* SEÇÃO 6: CTA FINAL */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-[#0F172A] to-[#1a2847]">
+        <div className="max-w-4xl mx-auto text-center text-white">
+          <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6">
+            Pronto para transformar seu negócio?
           </h2>
-          <p className="text-xl text-gray-100 mb-8">
-            Junte-se a centenas de empresas que já estão crescendo exponencialmente com C4X
+          <p className="text-xl text-gray-200 mb-12">
+            Comece com uma demo gratuita. Sem cartão de crédito necessário.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a href="/faq/contact?type=demo">
-              <Button size="lg" className="bg-white text-[#8B2635] hover:bg-gray-100">
-                Solicitar Demo Gratuita
+              <Button size="lg" className="bg-[#E8C99A] hover:bg-[#d4b87a] text-[#0F172A] font-semibold">
+                Solicitar Demo
               </Button>
             </a>
             <a href="/faq/contact?type=specialist">
@@ -363,57 +333,24 @@ export default function Home() {
               </Button>
             </a>
           </div>
-
-          <p className="text-gray-200 mt-8 text-sm">
-            ✓ Sem cartão de crédito necessário • ✓ Acesso completo • ✓ Suporte dedicado
-          </p>
         </div>
       </section>
 
       {/* Footer */}
       <footer className="bg-[#0F172A] text-white py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-4 gap-8 mb-8">
-            <div>
-              <img
-                src="/manus-storage/logofinal_1d222280.png"
-                alt="C4X"
-                className="h-8 object-contain mb-4"
-              />
-              <p className="text-gray-400 text-sm">Inteligência Virtual para sua Empresa</p>
+        <div className="max-w-7xl mx-auto text-center">
+          <div className="flex items-center justify-center gap-2 mb-6">
+            <div className="w-8 h-8 bg-white rounded flex items-center justify-center">
+              <span className="text-[#0F172A] font-bold text-xs">C4X</span>
             </div>
-
-            <div>
-              <h4 className="font-semibold mb-4">Produto</h4>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li><a href="#" className="hover:text-white transition">Recursos</a></li>
-                <li><a href="#" className="hover:text-white transition">Preços</a></li>
-                <li><a href="#" className="hover:text-white transition">Segurança</a></li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-semibold mb-4">Empresa</h4>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li><a href="#" className="hover:text-white transition">Sobre</a></li>
-                <li><a href="#" className="hover:text-white transition">Blog</a></li>
-                <li><a href="#" className="hover:text-white transition">Contato</a></li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-semibold mb-4">Legal</h4>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li><a href="#" className="hover:text-white transition">Privacidade</a></li>
-                <li><a href="#" className="hover:text-white transition">Termos</a></li>
-                <li><a href="#" className="hover:text-white transition">Cookies</a></li>
-              </ul>
-            </div>
+            <span className="text-sm font-semibold">Soluções IA</span>
           </div>
-
-          <div className="border-t border-gray-700 pt-8 text-center text-sm text-gray-400">
-            <p>&copy; 2026 C4X Soluções IA. Todos os direitos reservados.</p>
-          </div>
+          <p className="text-gray-400 text-sm mb-6">
+            Transformando negócios com Inteligência Artificial
+          </p>
+          <p className="text-gray-500 text-xs">
+            © 2026 C4X Soluções IA. Todos os direitos reservados.
+          </p>
         </div>
       </footer>
     </div>
