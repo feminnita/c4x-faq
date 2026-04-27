@@ -99,9 +99,9 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <img
-              src="/manus-storage/WhatsAppImage2026-04-26at10.29.51_2869d1f2.jpeg"
+              src="/manus-storage/logofinal_1d222280.png"
               alt="C4X IA Soluções"
-              className="h-8 object-contain"
+              className="h-10 object-contain"
             />
           </div>
           <nav className="hidden md:flex gap-8">
@@ -164,7 +164,7 @@ export default function Home() {
 
           <div className="hidden lg:block">
             <img
-              src="https://d2xsxph8kpxj0f.cloudfront.net/310419663030153148/gajF8zWd6y9RygyUMUpMsZ/c4x-hero-background-6gpYBjAtpAQaFyDagL4TT7.webp"
+              src="/manus-storage/pasted_file_BEa1tt_image_11ddb004.png"
               alt="Hero Background"
               className="w-full h-auto rounded-2xl shadow-2xl"
             />
@@ -232,8 +232,8 @@ export default function Home() {
           </div>
 
           <img
-            src="https://d2xsxph8kpxj0f.cloudfront.net/310419663030153148/gajF8zWd6y9RygyUMUpMsZ/c4x-modules-illustration-NPYYnBGfpa3ZEZ2WB9fKDs.webp"
-            alt="Modules"
+            src="/manus-storage/pasted_file_dzbWO4_image_ed5f769f.png"
+            alt="Módulos Integrados"
             className="w-full rounded-2xl shadow-xl mb-12"
           />
         </div>
@@ -368,7 +368,7 @@ export default function Home() {
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
               <img
-                src="/manus-storage/WhatsAppImage2026-04-26at10.29.51_2869d1f2.jpeg"
+                src="/manus-storage/logofinal_1d222280.png"
                 alt="C4X"
                 className="h-8 object-contain mb-4"
               />
